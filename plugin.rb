@@ -18,6 +18,7 @@ after_initialize do
 
   module ::TopicLocked
     def self.access_restricted(guardian, topic, user)
+      return true if user.nil?
       return false if guardian.is_admin? || user.id == topic.user_id
 
       if topic.custom_fields["topic_restricted_access"]
@@ -44,7 +45,7 @@ after_initialize do
   require_dependency 'application_controller'
   class ::ApplicationController
     rescue_from ::TopicLocked::NoAccessLocked do
-      rescue_discourse_actions(:invalid_access, 402, include_ember: true)
+      rescue_discourse_actions(:invalid_access, 403, include_ember: true)
     end
   end
 end
