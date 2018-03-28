@@ -1,0 +1,17 @@
+{{#if siteSettings.private_topics_enabled}}
+  {{#if topic.custom_fields.topic_restricted_access}}
+    {{d-button
+      icon="user-times"
+      action="controlAccess"
+      label='private_topics.btn_public_label.title'
+      title="discourse_private_topics.make_public.help"
+    }}
+  {{else}}
+  {{d-button
+    icon="user-times"
+    action="controlAccess"
+    label='private_topics.btn_private_label.title'
+    title="discourse_private_topics.make_private.help"
+  }}
+  {{/if}}
+{{/if}}
