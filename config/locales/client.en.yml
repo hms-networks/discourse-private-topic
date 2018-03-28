@@ -1,0 +1,7 @@
+en:
+  js:
+    private_topics:
+      btn_private_label:
+        title: "Make Private"
+      btn_public_label:
+        title: "Make Public"
