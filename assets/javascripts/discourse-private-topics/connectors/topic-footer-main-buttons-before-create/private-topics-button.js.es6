@@ -3,7 +3,7 @@ import { ajax } from 'discourse/lib/ajax';
 
 export default {
   shouldRender(args, component) {
-    return true;
+    return Discourse.User.currentProp('staff');
   },
 
   actions: {
