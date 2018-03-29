@@ -6,6 +6,9 @@
 
 enabled_site_setting :private_topics_enabled
 
+
+register_asset("stylesheets/privatetopics.scss", :desktop)
+
 after_initialize do
   load File.expand_path("../controllers/privatetopic_controller.rb", __FILE__)
 
