@@ -11,6 +11,7 @@ export default Ember.Controller.extend({
        type: 'POST',
        data: { access_allowed: this.get('model.restrictedAccess'), topic_id: this.get('model.topic.id') }
      }).then((response)=>{
+       if(Discourse.SiteSettings.private_topics_suppress){
          let path = "/t/" + this.get('model.topic.id') + '/status';
          //Easiest way I could suppress from homepage for now.
          return ajax(path, {
@@ -19,6 +20,9 @@ export default Ember.Controller.extend({
          }).then(() => {
            window.location.reload();
          })
+       }else{
+         window.location.reload();
+       }
      }).catch(popupAjaxError);
     }
   }

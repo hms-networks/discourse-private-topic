@@ -2,3 +2,6 @@ plugins:
   private_topics_enabled:
     default: true
     client: true
+  private_topics_suppress:
+    default: true
+    client: true
