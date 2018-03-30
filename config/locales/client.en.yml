@@ -3,5 +3,7 @@ en:
     private_topics:
       btn_private_label:
         title: "Make Private"
+        help: "Select to make a topic private"
       btn_public_label:
         title: "Make Public"
+        help: "Select to make a topic public"
