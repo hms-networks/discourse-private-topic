@@ -10,8 +10,15 @@ export default Ember.Controller.extend({
       return ajax("/privatetopic/control_access",{
        type: 'POST',
        data: { access_allowed: this.get('model.restrictedAccess'), topic_id: this.get('model.topic.id') }
-     }).then(()=>{
-       window.location.reload();
+     }).then((response)=>{
+         let path = "/t/" + this.get('model.topic.id') + '/status';
+         //Easiest way I could suppress from homepage for now.
+         return ajax(path, {
+           type: 'PUT',
+           data: {enabled: !response.success, status: 'visible'}
+         }).then(() => {
+           window.location.reload();
+         })
      }).catch(popupAjaxError);
     }
   }

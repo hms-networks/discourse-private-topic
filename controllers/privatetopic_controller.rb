@@ -6,6 +6,6 @@ class ::PrivatetopicController < ::ApplicationController
     @topic = Topic.find_by(id: topic_id)
     @topic.custom_fields["topic_restricted_access"] = access_allowed
     @topic.save!
-    render json: { success: true }
+    render json: { success: @topic.custom_fields["topic_restricted_access"] }
   end
 end
