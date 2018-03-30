@@ -1,0 +1,9 @@
+ru:
+  js:
+    private_topics:
+      btn_private_label:
+        title: "Сделать частным"
+        help: "Выберите, чтобы сделать тему приватной"
+      btn_public_label:
+        title: "Сделать публичным"
+        help: "Выберите, чтобы сделать тему публичной"
