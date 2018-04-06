@@ -1,0 +1,4 @@
+de:
+  site_settings:
+    private_topics_enabled: "Aktivieren um Zugriff auf private Themen zu beschränken."
+    private_topics_suppress: "Aktivieren private Themen von der Übersicht zu verbergen."
