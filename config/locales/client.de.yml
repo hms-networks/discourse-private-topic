@@ -1,0 +1,9 @@
+de:
+  js:
+    private_topics:
+      btn_private_label:
+        title: "Privat"
+        help: "Stellt den Post auf PRIVAT. Nur sichtbar für Ersteller und Teammitglieder."
+      btn_public_label:
+        title: "Öffentlich"
+        help: "Stellt den Post wieder auf ÖFFENTLICH."
