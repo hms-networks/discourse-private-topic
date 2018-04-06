@@ -21,13 +21,15 @@ after_initialize do
 
   module ::TopicLocked
     def self.access_restricted(guardian, topic, user)
-      return true if user.nil?
-      return false if guardian.is_admin? || user.id == topic.user_id
-
-      if topic.custom_fields["topic_restricted_access"]
-        if user.id != topic.user_id
-          return true
+      if !user.nil?
+        return false if guardian.is_admin? || user.id == topic.user_id
+        if topic.custom_fields["topic_restricted_access"]
+          if user.id != topic.user_id
+            return true
+          end
         end
+      else
+        return true if topic.custom_fields["topic_restricted_access"] && user.nil?
       end
     end
 
