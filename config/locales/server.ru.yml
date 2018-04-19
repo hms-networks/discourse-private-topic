@@ -1,0 +1,4 @@
+ru:
+  site_settings:
+    private_topics_enabled: "Включить, чтобы разрешить ограничения доступа к теме."
+    private_topics_suppress: "Включить отключение закрытых тем из списка тем."
