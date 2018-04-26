@@ -42,6 +42,11 @@ after_initialize do
 
     def check_and_raise_exceptions
       if SiteSetting.private_topics_enabled
+        if @topic.archetype == "private_message"
+          if !@topic.allowed_users.include?(@user)
+            raise ::TopicLocked::NoAccessLocked.new
+          end
+        end
         raise ::TopicLocked::NoAccessLocked.new if TopicLocked.access_restricted(@guardian, @topic, @user)
       end
     end
