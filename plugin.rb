@@ -23,6 +23,9 @@ after_initialize do
     def self.access_restricted(guardian, topic, user)
       if !user.nil?
         return false if guardian.is_admin? || guardian.is_moderator? || guardian.is_staff? || user.id == topic.user_id
+        if !guardian.can_see?(topic) 
+          raise ::TopicLocked::NoAccessLocked.new
+        end
         if topic.archetype == "private_message"
           if !topic.allowed_users.include?(user)
             raise ::TopicLocked::NoAccessLocked.new
