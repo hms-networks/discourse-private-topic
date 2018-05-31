@@ -23,15 +23,16 @@ after_initialize do
     def self.access_restricted(guardian, topic, user)
       if !user.nil?
         return false if guardian.is_admin? || guardian.is_moderator? || guardian.is_staff? || user.id == topic.user_id
-        if !guardian.can_see?(topic) 
-          raise ::TopicLocked::NoAccessLocked.new
-        end
-        if topic.archetype == "private_message"
+      end
+      if !guardian.can_see?(topic)
+        raise ::TopicLocked::NoAccessLocked.new
+      end
+      if topic.archetype == "private_message"
           if !topic.allowed_users.include?(user)
             raise ::TopicLocked::NoAccessLocked.new
           end
         end
-        if topic.custom_fields["topic_restricted_access"]
+        if topic.custom_fields["topic_restricted_access"] && !user.nil?
           if user.id != topic.user_id
             return true
           end
@@ -40,7 +41,6 @@ after_initialize do
         return true if topic.archetype == "private_message" && user.nil?
         return true if topic.custom_fields["topic_restricted_access"] && user.nil?
       end
-    end
 
     class NoAccessLocked < StandardError; end
   end
