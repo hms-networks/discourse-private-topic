@@ -22,7 +22,15 @@ after_initialize do
   module ::TopicLocked
     def self.access_restricted(guardian, topic, user)
       if !user.nil?
-        return false if guardian.is_admin? || guardian.is_moderator? || guardian.is_staff? || user.id == topic.user_id
+        return false if guardian.is_admin? || guardian.is_moderator? || guardian.is_staff? || user.id == topic.user_id 
+      end
+      if SiteSetting.hms_phone_tracking_enabled
+        if !topic.custom_fields["phone_survey_recipient"].nil? && !user.nil?
+          surveyUserId = User.find_by(username: topic.custom_fields["phone_survey_recipient"]).id
+          if user.id.to_i == surveyUserId.to_i
+            return false
+          end
+        end
       end
       if !guardian.can_see?(topic)
         raise ::TopicLocked::NoAccessLocked.new
