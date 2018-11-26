@@ -1,0 +1,9 @@
+en:
+  js:
+    private_topics:
+      btn_private_label:
+        title: "비공개하기"
+        help: "토픽을 비공개하시려면 선택해주세요"
+      btn_public_label:
+        title: "공개하기"
+        help: "토픽을 공개하시려면 선택해주세요"
