@@ -1,0 +1,4 @@
+ko:
+  site_settings:
+    private_topics_enabled: "토픽의 접근 제한 여부(공개/비공개)를 활성화합니다."
+    private_topics_suppress: "비공개 토픽들을 토픽 목록에서 노출시키지 않습니다."
