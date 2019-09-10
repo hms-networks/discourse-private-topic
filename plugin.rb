@@ -43,8 +43,6 @@ after_initialize do
         if topic.custom_fields["topic_restricted_access"] && !user.nil?
           return true
         end
-
-        return true if topic.custom_fields["topic_restricted_access"] && user.nil?
       end
 
     class NoAccessLocked < StandardError; end
