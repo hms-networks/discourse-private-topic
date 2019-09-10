@@ -21,16 +21,20 @@ after_initialize do
 
   module ::TopicLocked
     def self.access_restricted(guardian, topic, user)
+
+      ## set a bool for if the topic is locked to user
+      hasBeenLocked = true
+
       if !user.nil?
         if guardian.is_admin? || guardian.is_moderator? || guardian.is_staff? || user.id == topic.user_id
-          return false
+          hasBeenLocked = false
         end
       end
       if SiteSetting.hms_phone_tracking_enabled
         if !topic.custom_fields["phone_survey_recipient"].nil? && !user.nil?
           surveyUserId = User.find_by(username: topic.custom_fields["phone_survey_recipient"]).id
           if user.id.to_i == surveyUserId.to_i
-            return false
+            hasBeenLocked = false
           end
         end
       end
@@ -43,9 +47,12 @@ after_initialize do
           end
         end
         if topic.custom_fields["topic_restricted_access"] && !user.nil?
-          return true
+          hasBeenLocked = true
         end
-      end
+
+        ## return if the topic is locked to user
+        return hasBeenLocked
+    end
 
     class NoAccessLocked < StandardError; end
   end
