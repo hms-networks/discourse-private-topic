@@ -42,16 +42,16 @@ after_initialize do
         raise ::TopicLocked::NoAccessLocked.new
       end
       if topic.archetype == "private_message"
-          if !topic.allowed_users.include?(user)
-            raise ::TopicLocked::NoAccessLocked.new
-          end
+        if !topic.allowed_users.include?(user)
+          raise ::TopicLocked::NoAccessLocked.new
         end
-        if topic.custom_fields["topic_restricted_access"] && !user.nil?
-          hasBeenLocked = true
-        end
+      end
+      if topic.custom_fields["topic_restricted_access"] && !user.nil?
+        hasBeenLocked = true
+      end
 
-        ## return if the topic is locked to user
-        return hasBeenLocked
+      ## return if the topic is locked to user
+      return hasBeenLocked
     end
 
     class NoAccessLocked < StandardError; end
