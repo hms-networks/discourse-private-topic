@@ -45,7 +45,7 @@ after_initialize do
             return true
           end
         end
-      else
+
         return true if topic.archetype == "private_message" && user.nil?
         return true if topic.custom_fields["topic_restricted_access"] && user.nil?
       end
