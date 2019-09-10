@@ -51,6 +51,7 @@ after_initialize do
       return hasBeenLocked
     end
 
+    ## add in NoAccesslocked class inherited from standarderror so that it can be rescued
     class NoAccessLocked < StandardError; end
   end
 
@@ -67,6 +68,7 @@ after_initialize do
 
   require_dependency 'application_controller'
   class ::ApplicationController
+    ## display helpful message when rescuing the NoAccesslocked exception
     rescue_from ::TopicLocked::NoAccessLocked do
       rescue_discourse_actions(:invalid_access, 403, include_ember: true)
     end
