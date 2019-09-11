@@ -25,6 +25,11 @@ after_initialize do
       ## set a bool for if the topic is locked to user
       hasBeenLocked = true
 
+      # if topic is not restricted, dont lock it
+      if !topic.custom_fields["topic_restricted_access"]
+        hasBeenLocked = false
+      end
+
       if !user.nil?
         if guardian.is_admin? || guardian.is_moderator? || guardian.is_staff? || user.id == topic.user_id
           hasBeenLocked = false
