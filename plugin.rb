@@ -21,14 +21,25 @@ after_initialize do
 
   module ::TopicLocked
     def self.access_restricted(guardian, topic, user)
+
+      ## set a bool for if the topic is locked to user
+      hasBeenLocked = true
+
+      # if topic is not restricted, dont lock it
+      if !topic.custom_fields["topic_restricted_access"]
+        hasBeenLocked = false
+      end
+
       if !user.nil?
-        return false if guardian.is_admin? || guardian.is_moderator? || guardian.is_staff? || user.id == topic.user_id 
+        if guardian.is_admin? || guardian.is_moderator? || guardian.is_staff? || user.id == topic.user_id
+          hasBeenLocked = false
+        end
       end
       if SiteSetting.hms_phone_tracking_enabled
         if !topic.custom_fields["phone_survey_recipient"].nil? && !user.nil?
           surveyUserId = User.find_by(username: topic.custom_fields["phone_survey_recipient"]).id
           if user.id.to_i == surveyUserId.to_i
-            return false
+            hasBeenLocked = false
           end
         end
       end
@@ -36,20 +47,16 @@ after_initialize do
         raise ::TopicLocked::NoAccessLocked.new
       end
       if topic.archetype == "private_message"
-          if !topic.allowed_users.include?(user)
-            raise ::TopicLocked::NoAccessLocked.new
-          end
+        if !topic.allowed_users.include?(user)
+          raise ::TopicLocked::NoAccessLocked.new
         end
-        if topic.custom_fields["topic_restricted_access"] && !user.nil?
-          if user.id != topic.user_id
-            return true
-          end
-        end
-      else
-        return true if topic.archetype == "private_message" && user.nil?
-        return true if topic.custom_fields["topic_restricted_access"] && user.nil?
       end
 
+      ## return if the topic is locked to user
+      return hasBeenLocked
+    end
+
+    ## add in NoAccesslocked class inherited from standarderror so that it can be rescued
     class NoAccessLocked < StandardError; end
   end
 
@@ -66,6 +73,7 @@ after_initialize do
 
   require_dependency 'application_controller'
   class ::ApplicationController
+    ## display helpful message when rescuing the NoAccesslocked exception
     rescue_from ::TopicLocked::NoAccessLocked do
       rescue_discourse_actions(:invalid_access, 403, include_ember: true)
     end
