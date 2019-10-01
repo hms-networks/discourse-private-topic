@@ -33,8 +33,9 @@ after_initialize do
       if !user.nil?
         if guardian.is_admin? || guardian.is_moderator? || guardian.is_staff? || user.id == topic.user_id
           hasBeenLocked = false
-        end
+        end 
       end
+
       if SiteSetting.hms_phone_tracking_enabled
         if !topic.custom_fields["phone_survey_recipient"].nil? && !user.nil?
           surveyUserId = User.find_by(username: topic.custom_fields["phone_survey_recipient"]).id
@@ -52,6 +53,10 @@ after_initialize do
         end
       end
 
+      # test turn off for not logged in user
+      if user.nil?
+        hasBeenLocked = false;
+      end
       ## return if the topic is locked to user
       return hasBeenLocked
     end
