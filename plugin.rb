@@ -35,12 +35,10 @@ after_initialize do
           hasBeenLocked = false
         end
       end
-      if SiteSetting.hms_phone_tracking_enabled
-        if !topic.custom_fields["phone_survey_recipient"].nil? && !user.nil?
-          surveyUserId = User.find_by(username: topic.custom_fields["phone_survey_recipient"]).id
-          if user.id.to_i == surveyUserId.to_i
-            hasBeenLocked = false
-          end
+      if !topic.custom_fields["phone_survey_recipient"].nil? && !user.nil?
+        surveyUserId = User.find_by(username: topic.custom_fields["phone_survey_recipient"]).id
+        if user.id.to_i == surveyUserId.to_i
+          hasBeenLocked = false
         end
       end
       if !guardian.can_see?(topic)
