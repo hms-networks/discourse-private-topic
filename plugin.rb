@@ -1,7 +1,7 @@
 # name: private-topics
 # about: Searchable private category topics
 # version: 0.1
-# authors: Jordan Seanor
+# authors: HMS Americas Solution Center
 # url: https://github.com/HMSAB/discourse-private-topic.git
 
 enabled_site_setting :private_topics_enabled
