@@ -2,7 +2,7 @@
 # about: Searchable private category topics
 # version: 0.1
 # authors: HMS Americas Solution Center
-# url: https://github.com/HMSAB/discourse-private-topic.git
+# url: https://github.com/hms-networks/discourse-private-topic
 
 enabled_site_setting :private_topics_enabled
 
