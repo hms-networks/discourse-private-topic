@@ -46,7 +46,7 @@ after_initialize do
       end
       if !topic.nil? && topic.archetype == "private_message"
         # check if a user has created the topic or is an allowed user
-        if !topic.allowed_users.include?(user) || user.id != topic.user_id
+        if !topic.allowed_users.include?(user) && user.id != topic.user_id
          # The user may belong to a group that is allowed to access the topic
           isUserInAllowedGroup = false
           topic.allowed_groups.each do |group|
