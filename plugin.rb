@@ -35,7 +35,7 @@ after_initialize do
           hasBeenLocked = false
         end
       end
-      if !topic.custom_fields["phone_survey_recipient"].nil? && !user.nil?
+      if !topic.nil? && (!topic.custom_fields["phone_survey_recipient"].nil? && !user.nil?)
         surveyUserId = User.find_by(username: topic.custom_fields["phone_survey_recipient"]).id
         if user.id.to_i == surveyUserId.to_i
           hasBeenLocked = false
@@ -44,7 +44,7 @@ after_initialize do
       if !guardian.can_see?(topic)
         raise ::TopicLocked::NoAccessLocked.new
       end
-      if topic.archetype == "private_message"
+      if !topic.nil? && topic.archetype == "private_message"
         # check if a user has created the topic or is an allowed user
         if !topic.allowed_users.include?(user) && user.id != topic.user_id
          # The user may belong to a group that is allowed to access the topic
