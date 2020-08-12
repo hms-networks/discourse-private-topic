@@ -45,7 +45,8 @@ after_initialize do
         raise ::TopicLocked::NoAccessLocked.new
       end
       if topic.archetype == "private_message"
-        if !topic.allowed_users.include?(user)
+        # check if a user has created the topic or is an allowed user
+        if !topic.allowed_users.include?(user) && user.id != topic.user_id
           raise ::TopicLocked::NoAccessLocked.new
         end
       end
