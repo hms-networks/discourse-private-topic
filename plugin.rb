@@ -1,6 +1,6 @@
 # name: private-topics
 # about: Searchable private category topics
-# version: 0.2
+# version: 0.3
 # authors: HMS Networks Americas Solution Center
 # url: https://github.com/hms-networks/discourse-private-topic
 
