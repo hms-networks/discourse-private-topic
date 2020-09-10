@@ -26,7 +26,7 @@ after_initialize do
       hasBeenLocked = true
 
       # if topic is not restricted, dont lock it
-      if !topic.nil? && (!topic.custom_fields["topic_restricted_access"].nil? || !topic.custom_fields["topic_restricted_access"])
+      if !topic.nil? && (topic.custom_fields["topic_restricted_access"].nil? || !topic.custom_fields["topic_restricted_access"])
         hasBeenLocked = false
       end
 
