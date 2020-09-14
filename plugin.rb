@@ -62,7 +62,7 @@ after_initialize do
   class ::TopicView
     alias_method :old_check_and_raise_exceptions, :check_and_raise_exceptions
 
-    def check_and_raise_exceptions
+    def check_and_raise_exceptions(skip_staff_action)
       if SiteSetting.private_topics_enabled
         raise ::TopicLocked::NoAccessLocked.new if TopicLocked.access_restricted(@guardian, @topic, @user)
       end
